@@ -1,9 +1,4 @@
-// =====================
-// BASE URL
-// =====================
-const BASE_URL =
-  import.meta?.env?.VITE_API_URL ||
-  "https://tiendaback-p3sl.onrender.com/api";
+const BASE_URL = import.meta?.env?.VITE_API_URL || "http://localhost:8000/api";
 
 // =====================
 // REFRESH TOKEN
@@ -39,7 +34,7 @@ async function authFetch(url, options = {}, token) {
         localStorage.setItem("access", newTokens.access);
         token = newTokens.access;
 
-        // reintento con nuevo token
+        // reintento
         headers = {
           ...(options.headers || {}),
           ...(options.body && { "Content-Type": "application/json" }),
@@ -82,7 +77,6 @@ export const login = async (credentials) => {
     body: JSON.stringify(credentials),
   });
 };
-
 export const register = async (data) => {
   return authFetch(`${BASE_URL}/register/`, {
     method: "POST",
@@ -99,7 +93,6 @@ export const getProductos = async () => {
 export const getCarrito = async (token) => {
   return authFetch(`${BASE_URL}/carrito/`, { method: "GET" }, token);
 };
-
 export const agregarAlCarrito = async (producto_id, cantidad = 1, token) => {
   return authFetch(
     `${BASE_URL}/carrito/agregar/`,
@@ -110,7 +103,6 @@ export const agregarAlCarrito = async (producto_id, cantidad = 1, token) => {
     token
   );
 };
-
 export const eliminarDelCarrito = async (itemId, token) => {
   return authFetch(
     `${BASE_URL}/carrito/eliminar/${itemId}/`,
@@ -118,7 +110,6 @@ export const eliminarDelCarrito = async (itemId, token) => {
     token
   );
 };
-
 export const setCantidadItem = async (itemId, cantidad, token) => {
   return authFetch(
     `${BASE_URL}/carrito/actualizar/${itemId}/`,
@@ -131,7 +122,6 @@ export const setCantidadItem = async (itemId, cantidad, token) => {
 export const crearPedido = async (token) => {
   return authFetch(`${BASE_URL}/pedido/crear/`, { method: "POST" }, token);
 };
-
 export const getPedidos = async (token) => {
   return authFetch(`${BASE_URL}/pedidos/`, { method: "GET" }, token);
 };
